@@ -1,0 +1,64 @@
+.base-page {
+  /* height: 100%; */
+  width: 100%;
+  min-height: 90%;
+  padding: 20px;
+}
+
+.headerLinks {
+  display: flex;
+  align-items: center;
+}
+
+.headerLinks > div{
+  margin: 10px;
+
+}
+
+.loginContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.loginForm {
+  display: flex;
+  flex-direction: column;
+}
+
+.clientList {
+
+}
+
+.clientList li {
+  height: 50px;
+  width: 200px;
+  border: 1px solid gray;
+} 
+.clientList li:hover {
+  background-color: rgba(0,0,0,0.3);
+}
+
+.converter {
+  display: flex;
+  align-items: center;
+}
+
+/* Receipts page */
+.receiptsSection {
+  width: 100%;
+  margin-bottom: 10px;
+}
+
+.loading {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(0,0,0,0.4);
+  color: #fff;
+}
