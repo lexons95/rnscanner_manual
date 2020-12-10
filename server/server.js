@@ -48,19 +48,6 @@ app.post('/image',async function(req,res,next){
   console.log('bodybody',body)
   let getImageResult = await rbGetImageRequest(body.cookie,body.url)
   return res.send(getImageResult)
-
-  // fetch(body.url, {
-  //     headers: {
-  //       "Content-Type": "application/octet-stream",
-  //     },
-  //     credentials: 'include'
-  // }).then((data)=>{
-  //   console.log('get image', data)
-  // }).catch(err=>{
-  //   console.log('get image err', err)
-
-  // })
-  // return res.send("400")
 });
 
 

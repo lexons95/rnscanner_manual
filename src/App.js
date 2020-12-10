@@ -20,8 +20,9 @@ import CreateAccount from './page/CreateAccount';
 
 import './App.css';
 import './base.css';
+require('dotenv').config()
 
-const API_URL = 'http://graphql.lollipoplab.io:4000/graphql'
+const API_URL = "http://graphql.lollipoplab.io:4000/graphql";
 const uploadLink = createUploadLink({
   uri: API_URL,
   credentials: "include"

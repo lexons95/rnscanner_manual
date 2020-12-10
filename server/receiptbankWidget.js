@@ -1,14 +1,12 @@
 const request = require('request').defaults({ encoding: null });;
 const nodemailer = require('nodemailer');
 const path = require('path');
-const fetch = require('node-fetch');
-const fs = require('fs');
 require('dotenv').config()
-const imageToBase64 = require('image-to-base64');
 
 const username = process.env.RB_USERNAME;
 const password = process.env.RB_PASSWORD;
 const accountId = process.env.RB_ACCOUNTID;
+const RB_URL = "https://app.receipt-bank.com/"
 
 function parseCookies(rawCookie) {
   const raw = rawCookie;
