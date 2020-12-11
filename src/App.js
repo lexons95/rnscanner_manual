@@ -29,8 +29,7 @@ const uploadLink = createUploadLink({
 });
 const client = new ApolloClient({
   cache: new InMemoryCache(),
-  link: uploadLink,
-  credentials: "include"
+  link: uploadLink
 });
 
 const AppContent = () => {

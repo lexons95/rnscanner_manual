@@ -159,9 +159,16 @@ const Receipts = (props) => {
     setRbCookie(null)
   }
 
-  const handleOnJSONChange = (value) => {
+  const handleOnJSONChange = (value, index=null) => {
     // console.log('arrr', value)
-    setEditedReceipts(value)
+    if (index != null) {
+      let newEditedReceipts = [].concat(editedReceipts)
+      newEditedReceipts[index] = value
+      setEditedReceipts(newEditedReceipts)
+    }
+    else {
+      setEditedReceipts(value)
+    }
   }
 
   const handleUploadEditedReceipts = async () => {
@@ -223,16 +230,31 @@ const Receipts = (props) => {
             )
           })
         } */}
-        {
+        {/* {
           convertedReceipts && convertedReceipts.length > 0 ? (
             <JSONEditor
               value={convertedReceipts}
               onChange={handleOnJSONChange}
             />
           ) : null
+        } */}
+        {
+          convertedReceipts && convertedReceipts.length > 0 && convertedReceipts.map((aReceipt,index)=>{
+            return (
+              <div key={index} style={{display: 'flex', marginBottom: '10px'}}>
+                <JSONEditor
+                  value={aReceipt}
+                  onChange={(value)=>{handleOnJSONChange(value,index)}}
+                />
+                <Image cookie={rbCookie} url={aReceipt.imageUrl2} />
+              </div>
+
+            )
+          })
         }
       </div>
       <div className="receiptsSection">
+        {/* <Button onClick={()=>{console.log('edited',editedReceipts)}}>Log Edited</Button> */}
         <Button onClick={handleUploadEditedReceipts}>Upload edited Receipts</Button>
       </div>
       <DeleteReceiptsForm cookie={rbCookie} convertedReceipts={inboxReceipts} />
@@ -393,7 +415,6 @@ const getUploadParams = async (data, clientCode, cookie) => {
       // write the ArrayBuffer to a blob, and you're done
       var blob = new Blob([ab], {type: mimeString});
       return blob;
-    
     }
 
     const theFile = dataURItoBlob(imgURI.data);
@@ -446,15 +467,18 @@ const JSONEditor = (props) => {
     onChange(value.jsObject)
   }
   return (
-    <JSONInput
-      id          = {`id${Math.random()}`}
-      placeholder = {value}
-      locale      = {locale}
-      height      = '500px'
-      onChange    = {handleOnChange}
-      {...restProps}
-      //reset={true}
-    />
+    <div>
+      <JSONInput
+        id          = {`id${Math.random()}`}
+        placeholder = {value}
+        locale      = {locale}
+        height      = '500px'
+        onChange    = {handleOnChange}
+        {...restProps}
+        //reset={true}
+      />
+      
+    </div>
   )
 }
 
@@ -641,11 +665,15 @@ const DeleteReceiptsForm = (props) => {
 }
 
 const Image = (props) => {
-  const { src } = props;
-
+  const { cookie, url } = props;
+  const[ src, setSrc ] = useState(null)
+  useEffect(async ()=>{
+    let imgURI = await rbReadImage(cookie,url)
+    setSrc(imgURI.data)
+  },[])
   let style = {
-    height: '400px',
-    width: '400px',
+    maxHeight: '500px',
+    width: '500px',
     overflow: 'hidden',
     border: '1px solid black'
   }
@@ -655,7 +683,11 @@ const Image = (props) => {
   }
   return (
     <div style={style}>
-      <img src={src} style={imgStyle} />
+      {
+        src ? 
+        (<img src={src} style={imgStyle} />)
+        : null
+      }
     </div>
   )
 }
